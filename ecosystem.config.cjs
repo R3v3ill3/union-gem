@@ -3,17 +3,15 @@ module.exports = {
     name: 'union-campaign-planner',
     script: 'npm',
     args: 'run dev',
-    cwd: '/home/project',
+    cwd: '/var/www/campaign-planner/union-gem',
     watch: false,
     env: {
       NODE_ENV: 'development',
       PORT: 5250,
       HOST: true
     },
-    out_file: '/home/project/logs/out.log',
-    error_file: '/home/project/logs/error.log',
-    log_file: '/home/project/logs/combined.log',
-    time: true,
+    out_file: '/home/troy/.pm2/logs/union-campaign-planner-out.log',
+    error_file: '/home/troy/.pm2/logs/union-campaign-planner-error.log',
     combine_logs: true,
     log_date_format: 'YYYY-MM-DD HH:mm:ss Z'
   }]

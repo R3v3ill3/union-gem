@@ -13,6 +13,7 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
+// Initialize Firebase app
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
@@ -60,6 +61,7 @@ export const saveCampaignData = async (userId: string, campaignData: CampaignFor
       updatedAt: new Date().toISOString(),
       status: 'active',
       isNewCampaign,
+      campaignType: 'union', // Add campaign type identifier
       analysisState: isNewCampaign ? {
         steps: [],
         currentStep: 1,
@@ -144,7 +146,8 @@ export const getUserCampaigns = async (userId: string) => {
     const campaignsQuery = query(
       collection(db, 'campaigns'),
       where('userId', '==', userId),
-      where('status', '==', 'active')
+      where('status', '==', 'active'),
+      where('campaignType', '==', 'union') // Only fetch union campaigns
     );
     
     const querySnapshot = await getDocs(campaignsQuery);

@@ -10,8 +10,9 @@ module.exports = {
       PORT: 5250,
       HOST: true
     },
-    out_file: '/home/troy/.pm2/logs/union-campaign-planner-out.log',
-    error_file: '/home/troy/.pm2/logs/union-campaign-planner-error.log',
+    out_file: '/var/www/campaign-planner/union-gem/logs/out.log',
+    error_file: '/var/www/campaign-planner/union-gem/logs/error.log',
+    log_file: '/var/www/campaign-planner/union-gem/logs/combined.log',
     combine_logs: true,
     log_date_format: 'YYYY-MM-DD HH:mm:ss Z'
   }]

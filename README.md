@@ -1,6 +1,6 @@
-# Environmental Campaign Planning Web App
+# Union Campaign Planning Web App
 
-A comprehensive web application for planning and managing environmental campaigns using AI-powered analysis and Firebase integration.
+A comprehensive web application for planning and managing union campaigns using AI-powered analysis and Firebase integration.
 
 ## Features
 
@@ -30,8 +30,8 @@ A comprehensive web application for planning and managing environmental campaign
 
 1. Clone the repository:
 ```bash
-git clone -b gemini https://github.com/R3v3ill3/praxis-dev.git praxis-enviro
-cd praxis-enviro
+git clone https://github.com/yourusername/union-campaign-planner.git
+cd union-campaign-planner
 ```
 
 2. Install dependencies:
@@ -69,16 +69,7 @@ npm run dev
    - Choose a location closest to your users
 
 4. Set up Security Rules:
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /campaigns/{campaignId} {
-      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
-    }
-  }
-}
-```
+   - Copy the contents of `firestore.rules` to your Firebase security rules
 
 ## Project Structure
 
@@ -175,7 +166,7 @@ Common issues and solutions:
 ## Support
 
 For issues or questions:
-1. Check the [GitHub Issues](https://github.com/R3v3ill3/praxis-dev/issues)
+1. Check the GitHub Issues
 2. Review Firebase documentation
 3. Contact support@yourdomain.com
 

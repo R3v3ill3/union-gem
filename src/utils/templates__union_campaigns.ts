@@ -9,7 +9,7 @@ Generate a preliminary political analysis of the {decision_status} of the {proje
 
 Prompt:
 
-You are a senior strategist specializing in union, industrial, and political campaigns, with deep expertise in corporate behavior, government labor policy, and power mapping in {jurisdiction}. Perform a detailed exploratory analysis of the {decision_type} regarding the {campaign_target} campaign led by {union_name}.
+You are a senior political analyst specializing in {jurisdiction} politics and environmental policy. Perform a detailed exploratory analysis of the {decision_type} regarding the {project_name}.
 
 Tasks (Provide detailed and structured responses):
 1. Explicit Political Narratives:
@@ -38,7 +38,7 @@ Perform an in-depth refinement of the political analysis, explicitly probing dee
 
 Prompt:
 
-You are now tasked to refine and deepen the strategic campaign analysis based on the exploratory report from Stage 1 (provided below). Your objective is to probe deeply into corporate-government relations, anti-union strategies, and political biases shaping the campaign environment.
+You are now tasked to refine and deepen the political analysis based on the detailed exploratory report from Stage 1 (provided below). Your primary objective is to explicitly investigate the implicit political subtexts, particularly relationships with {economic_interests} and ideological biases.
 
 Stage 1 Analysis (for context):
 {previous_analysis}

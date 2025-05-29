@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Leaf } from 'lucide-react';
+import { Users } from 'lucide-react';
 import FormInput from './FormInput';
 import MultiItemInput from './MultiItemInput';
 import SelectInput from './SelectInput';
@@ -14,11 +14,13 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
   const [formData, setFormData] = useState<CampaignFormData>({
     core_issue_details: {
       project_name: '',
-      decision_type: 'Political',
-      decision_status: 'Under Review',
+      union_name: '',
+      campaign_target: '',
+      decision_type: 'Industrial',
+      decision_status: 'Planning',
       decision_date: '',
       jurisdiction: '',
-      environmental_topic: '',
+      campaign_topic: '',
       issue_description: '',
     },
     documents_and_links: {
@@ -32,15 +34,21 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
       advocacy_groups: [],
       economic_interests: [],
       community_dynamics: '',
+      union_density: '',
+      worker_demographics: '',
     },
     political_and_strategic: {
       political_motivations: '',
       ideological_framing: '',
       corporate_influence: '',
+      union_strategy: '',
+      industrial_leverage: '',
     },
     campaign_outcome: {
       primary_goal: '',
       primary_audience: '',
+      worker_demands: [],
+      success_metrics: [],
     },
   });
   
@@ -101,15 +109,23 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
     const newErrors: Record<string, string> = {};
     
     if (!formData.core_issue_details.project_name) {
-      newErrors['core_issue_details.project_name'] = 'Project name is required';
+      newErrors['core_issue_details.project_name'] = 'Campaign name is required';
+    }
+    
+    if (!formData.core_issue_details.union_name) {
+      newErrors['core_issue_details.union_name'] = 'Union name is required';
+    }
+
+    if (!formData.core_issue_details.campaign_target) {
+      newErrors['core_issue_details.campaign_target'] = 'Campaign target is required';
     }
     
     if (!formData.core_issue_details.jurisdiction) {
       newErrors['core_issue_details.jurisdiction'] = 'Jurisdiction is required';
     }
     
-    if (!formData.core_issue_details.environmental_topic) {
-      newErrors['core_issue_details.environmental_topic'] = 'Environmental topic is required';
+    if (!formData.core_issue_details.campaign_topic) {
+      newErrors['core_issue_details.campaign_topic'] = 'Campaign topic is required';
     }
     
     if (!formData.core_issue_details.issue_description) {
@@ -122,6 +138,10 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
     
     if (!formData.campaign_outcome.primary_audience) {
       newErrors['campaign_outcome.primary_audience'] = 'Primary audience is required';
+    }
+
+    if (formData.campaign_outcome.worker_demands.length === 0) {
+      newErrors['campaign_outcome.worker_demands'] = 'At least one worker demand is required';
     }
     
     setErrors(newErrors);
@@ -155,30 +175,49 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
       case 'core_issue_details':
         return (
           <div className="animate-fade-in">
-            <h3 className="text-lg font-medium mb-4">Core Issue Details</h3>
+            <h3 className="text-lg font-medium mb-4">Campaign Details</h3>
             
             <FormInput
               id="project_name"
-              label="Project/Campaign Name"
+              label="Campaign Name"
               value={formData.core_issue_details.project_name}
               onChange={(e) => handleInputChange('core_issue_details', 'project_name', e.target.value)}
               required
               error={errors['core_issue_details.project_name']}
             />
+
+            <FormInput
+              id="union_name"
+              label="Union Name"
+              value={formData.core_issue_details.union_name}
+              onChange={(e) => handleInputChange('core_issue_details', 'union_name', e.target.value)}
+              required
+              error={errors['core_issue_details.union_name']}
+            />
+
+            <FormInput
+              id="campaign_target"
+              label="Campaign Target"
+              placeholder="e.g., Company name, government department, industry sector"
+              value={formData.core_issue_details.campaign_target}
+              onChange={(e) => handleInputChange('core_issue_details', 'campaign_target', e.target.value)}
+              required
+              error={errors['core_issue_details.campaign_target']}
+            />
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <SelectInput
                 id="decision_type"
-                label="Type of Decision Being Targeted"
-                options={['Political', 'Corporate', 'Legislative', 'Regulatory', 'Hybrid', 'Other']}
+                label="Campaign Type"
+                options={['Industrial', 'Political', 'Legal', 'Community', 'Corporate', 'Other']}
                 value={formData.core_issue_details.decision_type}
                 onChange={(e) => handleInputChange('core_issue_details', 'decision_type', e.target.value)}
               />
               
               <SelectInput
                 id="decision_status"
-                label="Current Decision Status"
-                options={['Proposed', 'Under Review', 'Cancelled', 'Delayed', 'Approved', 'Other']}
+                label="Campaign Status"
+                options={['Planning', 'Active', 'Escalating', 'Resolving', 'Victory', 'Defeat']}
                 value={formData.core_issue_details.decision_status}
                 onChange={(e) => handleInputChange('core_issue_details', 'decision_status', e.target.value)}
               />
@@ -187,7 +226,7 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormInput
                 id="decision_date"
-                label="Date of Decision/Trigger Event (if applicable)"
+                label="Campaign Start Date"
                 type="date"
                 value={formData.core_issue_details.decision_date || ''}
                 onChange={(e) => handleInputChange('core_issue_details', 'decision_date', e.target.value)}
@@ -195,7 +234,7 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
               
               <FormInput
                 id="jurisdiction"
-                label="Jurisdiction/Region Involved"
+                label="Location/Region"
                 value={formData.core_issue_details.jurisdiction}
                 onChange={(e) => handleInputChange('core_issue_details', 'jurisdiction', e.target.value)}
                 required
@@ -204,19 +243,19 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
             </div>
             
             <FormInput
-              id="environmental_topic"
-              label="Key Environmental Topic"
-              placeholder="e.g., biodiversity loss, emissions, land clearing, renewable energy"
-              value={formData.core_issue_details.environmental_topic}
-              onChange={(e) => handleInputChange('core_issue_details', 'environmental_topic', e.target.value)}
+              id="campaign_topic"
+              label="Key Campaign Issue"
+              placeholder="e.g., wage theft, safety violations, job security"
+              value={formData.core_issue_details.campaign_topic}
+              onChange={(e) => handleInputChange('core_issue_details', 'campaign_topic', e.target.value)}
               required
-              error={errors['core_issue_details.environmental_topic']}
+              error={errors['core_issue_details.campaign_topic']}
             />
             
             <FormInput
               id="issue_description"
-              label="Brief Description of the Issue"
-              placeholder="Provide 1-3 paragraphs describing the issue"
+              label="Campaign Description"
+              placeholder="Provide 1-3 paragraphs describing the campaign issues and context"
               value={formData.core_issue_details.issue_description}
               onChange={(e) => handleInputChange('core_issue_details', 'issue_description', e.target.value)}
               multiline
@@ -234,7 +273,7 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
             
             <MultiItemInput
               id="news_links"
-              label="Relevant News Articles or Official Statements"
+              label="Relevant News Articles or Media Coverage"
               placeholder="Enter URL and press Enter or Add"
               items={formData.documents_and_links.news_links}
               onChange={(items) => handleArrayInputChange('documents_and_links', 'news_links', items)}
@@ -242,7 +281,7 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
             
             <MultiItemInput
               id="reference_links"
-              label="Links to Reports or Consultation Documents"
+              label="Links to Reports or Official Documents"
               placeholder="Enter URL and press Enter or Add"
               items={formData.documents_and_links.reference_links}
               onChange={(items) => handleArrayInputChange('documents_and_links', 'reference_links', items)}
@@ -260,44 +299,64 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
       case 'stakeholders':
         return (
           <div className="animate-fade-in">
-            <h3 className="text-lg font-medium mb-4">Stakeholders</h3>
+            <h3 className="text-lg font-medium mb-4">Stakeholders & Demographics</h3>
             
             <MultiItemInput
               id="decision_makers"
               label="Key Decision-Makers"
-              placeholder="e.g., Minister Smith, CEO Johnson"
+              placeholder="e.g., CEO, HR Director, Minister"
               items={formData.stakeholders.decision_makers}
               onChange={(items) => handleArrayInputChange('stakeholders', 'decision_makers', items)}
             />
             
             <MultiItemInput
               id="industry_actors"
-              label="Industry Players Involved (pro or con)"
-              placeholder="e.g., ABC Mining Corp, Renewable Energy Association"
+              label="Industry Players Involved"
+              placeholder="e.g., Industry associations, competitor companies"
               items={formData.stakeholders.industry_actors}
               onChange={(items) => handleArrayInputChange('stakeholders', 'industry_actors', items)}
             />
             
             <MultiItemInput
               id="advocacy_groups"
-              label="Community or Advocacy Groups Involved"
-              placeholder="e.g., Friends of the Forest, Local Community Alliance"
+              label="Allied Organizations"
+              placeholder="e.g., Other unions, community groups, NGOs"
               items={formData.stakeholders.advocacy_groups}
               onChange={(items) => handleArrayInputChange('stakeholders', 'advocacy_groups', items)}
             />
             
             <MultiItemInput
               id="economic_interests"
-              label="Any Known Economic Interests"
-              placeholder="e.g., coal, gas, real estate, tourism"
+              label="Economic Stakeholders"
+              placeholder="e.g., Investors, suppliers, customers"
               items={formData.stakeholders.economic_interests}
               onChange={(items) => handleArrayInputChange('stakeholders', 'economic_interests', items)}
             />
             
             <FormInput
+              id="union_density"
+              label="Union Density"
+              placeholder="Describe current union membership and density in workplace/sector"
+              value={formData.stakeholders.union_density}
+              onChange={(e) => handleInputChange('stakeholders', 'union_density', e.target.value)}
+              multiline
+              rows={3}
+            />
+
+            <FormInput
+              id="worker_demographics"
+              label="Worker Demographics"
+              placeholder="Describe key worker demographics (age, gender, ethnicity, skills, etc.)"
+              value={formData.stakeholders.worker_demographics}
+              onChange={(e) => handleInputChange('stakeholders', 'worker_demographics', e.target.value)}
+              multiline
+              rows={3}
+            />
+            
+            <FormInput
               id="community_dynamics"
-              label="Local Community Dynamics or Conflicts"
-              placeholder="Describe any relevant community dynamics or tensions"
+              label="Community Context"
+              placeholder="Describe any relevant community dynamics or relationships"
               value={formData.stakeholders.community_dynamics}
               onChange={(e) => handleInputChange('stakeholders', 'community_dynamics', e.target.value)}
               multiline
@@ -309,12 +368,12 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
       case 'political_and_strategic':
         return (
           <div className="animate-fade-in">
-            <h3 className="text-lg font-medium mb-4">Political & Strategic Dimensions</h3>
+            <h3 className="text-lg font-medium mb-4">Strategic Analysis</h3>
             
             <FormInput
               id="political_motivations"
-              label="Known or Suspected Political Motivations"
-              placeholder="Describe any political factors driving this issue"
+              label="Political Context"
+              placeholder="Describe relevant political factors affecting the campaign"
               value={formData.political_and_strategic.political_motivations}
               onChange={(e) => handleInputChange('political_and_strategic', 'political_motivations', e.target.value)}
               multiline
@@ -323,8 +382,8 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
             
             <FormInput
               id="ideological_framing"
-              label="Any Ideological Framing Observed"
-              placeholder="e.g., 'red tape', 'community rights', 'economic growth'"
+              label="Opposition Messaging"
+              placeholder="Describe how opponents frame the issues"
               value={formData.political_and_strategic.ideological_framing}
               onChange={(e) => handleInputChange('political_and_strategic', 'ideological_framing', e.target.value)}
               multiline
@@ -333,10 +392,30 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
             
             <FormInput
               id="corporate_influence"
-              label="Any History of Donations, Lobbying, or Corporate Influence Suspected"
-              placeholder="Describe any known influence activities"
+              label="Corporate/Industry Influence"
+              placeholder="Describe any known corporate influence or relationships"
               value={formData.political_and_strategic.corporate_influence}
               onChange={(e) => handleInputChange('political_and_strategic', 'corporate_influence', e.target.value)}
+              multiline
+              rows={3}
+            />
+
+            <FormInput
+              id="union_strategy"
+              label="Union Strategy"
+              placeholder="Outline current union strategy and approach"
+              value={formData.political_and_strategic.union_strategy}
+              onChange={(e) => handleInputChange('political_and_strategic', 'union_strategy', e.target.value)}
+              multiline
+              rows={3}
+            />
+
+            <FormInput
+              id="industrial_leverage"
+              label="Industrial Leverage"
+              placeholder="Describe points of industrial leverage or pressure"
+              value={formData.political_and_strategic.industrial_leverage}
+              onChange={(e) => handleInputChange('political_and_strategic', 'industrial_leverage', e.target.value)}
               multiline
               rows={3}
             />
@@ -346,12 +425,12 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
       case 'campaign_outcome':
         return (
           <div className="animate-fade-in">
-            <h3 className="text-lg font-medium mb-4">Desired Campaign Outcome</h3>
+            <h3 className="text-lg font-medium mb-4">Campaign Goals & Metrics</h3>
             
             <FormInput
               id="primary_goal"
-              label="What is your primary campaign goal?"
-              placeholder="e.g., reverse decision, gain support, raise public opposition"
+              label="Primary Campaign Goal"
+              placeholder="What is the main outcome you want to achieve?"
               value={formData.campaign_outcome.primary_goal}
               onChange={(e) => handleInputChange('campaign_outcome', 'primary_goal', e.target.value)}
               required
@@ -360,12 +439,30 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
             
             <FormInput
               id="primary_audience"
-              label="Who is your primary target audience?"
-              placeholder="e.g., swing voters, local community, media, politicians"
+              label="Primary Target Audience"
+              placeholder="Who are the key people you need to influence?"
               value={formData.campaign_outcome.primary_audience}
               onChange={(e) => handleInputChange('campaign_outcome', 'primary_audience', e.target.value)}
               required
               error={errors['campaign_outcome.primary_audience']}
+            />
+
+            <MultiItemInput
+              id="worker_demands"
+              label="Worker Demands"
+              placeholder="Enter each specific demand"
+              items={formData.campaign_outcome.worker_demands}
+              onChange={(items) => handleArrayInputChange('campaign_outcome', 'worker_demands', items)}
+              required
+              error={errors['campaign_outcome.worker_demands']}
+            />
+
+            <MultiItemInput
+              id="success_metrics"
+              label="Success Metrics"
+              placeholder="Enter measurable indicators of success"
+              items={formData.campaign_outcome.success_metrics}
+              onChange={(items) => handleArrayInputChange('campaign_outcome', 'success_metrics', items)}
             />
           </div>
         );
@@ -376,17 +473,17 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ onSubmit }) => {
   };
 
   const sections = [
-    { id: 'core_issue_details', label: 'Core Issue Details' },
+    { id: 'core_issue_details', label: 'Campaign Details' },
     { id: 'documents_and_links', label: 'Documents & Links' },
     { id: 'stakeholders', label: 'Stakeholders' },
-    { id: 'political_and_strategic', label: 'Political & Strategic' },
-    { id: 'campaign_outcome', label: 'Campaign Outcome' },
+    { id: 'political_and_strategic', label: 'Strategic Analysis' },
+    { id: 'campaign_outcome', label: 'Goals & Metrics' },
   ];
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
       <div className="flex items-center mb-6 text-primary-700">
-        <Leaf className="h-6 w-6 mr-2" />
+        <Users className="h-6 w-6 mr-2" />
         <h2 className="text-xl font-semibold">Campaign Intake Form</h2>
       </div>
       

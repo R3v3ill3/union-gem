@@ -1,17 +1,17 @@
 module.exports = {
   apps: [{
-    name: 'enviro-gem',
+    name: 'union-campaign-planner',
     script: 'npm',
     args: 'run dev',
-    cwd: '/var/www/campaign-planner/enviro-gem',
+    cwd: '/var/www/campaign-planner/union-planner',
     watch: false,
     env: {
       NODE_ENV: 'development',
-      PORT: 5175,
+      PORT: 5250,
       HOST: true
     },
-    out_file: '/home/troy/.pm2/logs/enviro-gem-out.log',
-    error_file: '/home/troy/.pm2/logs/enviro-gem-error.log',
+    out_file: '/home/troy/.pm2/logs/union-campaign-planner-out.log',
+    error_file: '/home/troy/.pm2/logs/union-campaign-planner-error.log',
     combine_logs: true,
     log_date_format: 'YYYY-MM-DD HH:mm:ss Z'
   }]

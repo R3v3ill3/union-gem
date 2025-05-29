@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { Leaf } from 'lucide-react';
+import { Users } from 'lucide-react';
 import { auth, logoutUser } from './utils/firebase';
 import CampaignForm from './components/CampaignForm';
 import ApiKeyForm from './components/ApiKeyForm';
@@ -81,8 +81,8 @@ function App() {
       <header className="bg-primary-800 text-white shadow-md">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center">
-            <Leaf className="h-8 w-8 mr-2" />
-            <h1 className="text-2xl font-bold">Environmental Campaign Planner</h1>
+            <Users className="h-8 w-8 mr-2" />
+            <h1 className="text-2xl font-bold">Union Campaign Planner</h1>
           </div>
           <div className="flex items-center space-x-4">
             {userId && !showNewCampaign && !formData && (
@@ -138,13 +138,13 @@ function App() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
               <div className="flex items-center">
-                <Leaf className="h-5 w-5 mr-2" />
-                <span className="text-white font-medium">Environmental Campaign Planner</span>
+                <Users className="h-5 w-5 mr-2" />
+                <span className="text-white font-medium">Union Campaign Planner</span>
               </div>
-              <p className="text-sm mt-1">A tool for environmental campaign strategy and planning</p>
+              <p className="text-sm mt-1">A tool for union campaign strategy and planning</p>
             </div>
             <div className="text-sm">
-              <p>© 2025 Environmental Campaign Planner</p>
+              <p>© 2025 Union Campaign Planner</p>
               <p>Powered by Gemini AI</p>
             </div>
           </div>

@@ -2,11 +2,13 @@
 
 export interface CoreIssueDetails {
   project_name: string;
-  decision_type: 'Political' | 'Corporate' | 'Legislative' | 'Regulatory' | 'Hybrid' | 'Other';
-  decision_status: 'Proposed' | 'Under Review' | 'Cancelled' | 'Delayed' | 'Approved' | 'Other';
+  union_name: string;
+  campaign_target: string;
+  decision_type: 'Industrial' | 'Political' | 'Legal' | 'Community' | 'Corporate' | 'Other';
+  decision_status: 'Planning' | 'Active' | 'Escalating' | 'Resolving' | 'Victory' | 'Defeat';
   decision_date?: string;
   jurisdiction: string;
-  environmental_topic: string;
+  campaign_topic: string;
   issue_description: string;
 }
 
@@ -29,17 +31,23 @@ export interface Stakeholders {
   advocacy_groups: string[];
   economic_interests: string[];
   community_dynamics: string;
+  union_density: string;
+  worker_demographics: string;
 }
 
 export interface PoliticalAndStrategic {
   political_motivations: string;
   ideological_framing: string;
   corporate_influence: string;
+  union_strategy: string;
+  industrial_leverage: string;
 }
 
 export interface CampaignOutcome {
   primary_goal: string;
   primary_audience: string;
+  worker_demands: string[];
+  success_metrics: string[];
 }
 
 export interface CampaignFormData {

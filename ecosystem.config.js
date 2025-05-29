@@ -1,17 +1,19 @@
 module.exports = {
   apps: [{
-    name: 'campaign-planner',
+    name: 'union-campaign-planner',
     script: 'npm',
     args: 'run dev',
-    cwd: '/var/www/campaign-planner/praxis-enviro',
+    cwd: './home/project',
     watch: false,
     env: {
       NODE_ENV: 'development',
-      PORT: 5174,
+      PORT: 5250,
       HOST: true
     },
-    out_file: '/home/troy/.pm2/logs/campaign-planner-out.log',
-    error_file: '/home/troy/.pm2/logs/campaign-planner-error.log',
+    out_file: './logs/out.log',
+    error_file: './logs/error.log',
+    log_file: './logs/combined.log',
+    time: true,
     combine_logs: true,
     log_date_format: 'YYYY-MM-DD HH:mm:ss Z'
   }]

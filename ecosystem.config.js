@@ -1,13 +1,13 @@
 module.exports = {
   apps: [{
-    name: 'campaign-planner',
+    name: 'union-campaign-planner',
     script: 'npm',
     args: 'run dev',
     cwd: '/home/project',
     watch: false,
     env: {
       NODE_ENV: 'development',
-      PORT: 5174,
+      PORT: 5250,
       HOST: true
     },
     out_file: '/home/project/logs/out.log',
